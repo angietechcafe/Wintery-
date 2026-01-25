@@ -452,7 +452,7 @@
     <footer>
         <p>&copy; 2024 Winterbucks Coffee Company. All rights reserved.</p>
         <p>🎄 Happy Holidays from our family to yours! ☕</p>
-        <!-- Development API endpoint: /api/admin?key=XMAS2024ADMIN -->
+        <!-- /api/admin?key=XMAS2024ADMIN -->
         <span class="hidden-hint">atcctf_snowflakeshidesecretsinwinter</span>
     </footer>
 
@@ -474,13 +474,13 @@
         }
         createSnowflakes();
 
-        // Cart functionality
+        
         let cart = [];
         
         function addToCart(item, price) {
             cart.push({item, price});
             
-            // Vulnerable: Sending sensitive data in GET request
+            
             fetch(`/api/cart?item=${encodeURIComponent(item)}&price=${price}&userId=${getUserId()}&session=${getSessionToken()}`)
                 .then(response => response.json())
                 .catch(error => console.log('Cart service unavailable'));
@@ -488,34 +488,33 @@
             alert(`Added ${item} to cart! Total items: ${cart.length}`);
         }
 
-        // Vulnerable: Weak session token generation
+        
         function getSessionToken() {
             let token = localStorage.getItem('sessionToken');
             if (!token) {
-                // Predictable session token (timestamp-based)
+                
                 token = 'WB' + Date.now();
                 localStorage.setItem('sessionToken', token);
             }
             return token;
         }
 
-        // Vulnerable: Sequential user IDs
+       
         function getUserId() {
             let userId = localStorage.getItem('userId');
             if (!userId) {
-                userId = Math.floor(Math.random() * 1000) + 1000; // IDs between 1000-2000
+                userId = Math.floor(Math.random() * 1000) + 1000; 
                 localStorage.setItem('userId', userId);
             }
             return userId;
         }
 
-        // Vulnerable: Client-side promo validation with hints in response
         function validatePromo(event) {
             event.preventDefault();
             const code = document.getElementById('promoCode').value;
             const message = document.getElementById('promoMessage');
             
-            // Simulate API call
+            
             fetch('/api/promo', {
                 method: 'POST',
                 headers: {
@@ -550,18 +549,18 @@
             });
         }
 
-        // Vulnerable: No rate limiting, XSS vulnerability
+       
         function subscribe(event) {
             event.preventDefault();
             const name = document.getElementById('subscribeName').value;
             const email = document.getElementById('subscribeEmail').value;
             const message = document.getElementById('subscribeMessage');
             
-            // Vulnerable: Reflecting user input without sanitization
+           
             message.className = 'message success';
             message.innerHTML = `✅ Thanks ${name}! Check your email at ${email} for confirmation.<br><small>atcctf_iciclesmeltinwarmrequests</small>`;
             
-            // Send to fake API
+            
             fetch('/api/subscribe', {
                 method: 'POST',
                 headers: {
@@ -580,7 +579,7 @@
             alert('Login functionality coming soon! 🎄\nHint: Check the network requests for interesting endpoints.');
         }
 
-        // Vulnerable: Exposing sensitive information in console
+        
         console.log('Winterbucks Debug Mode Active');
         console.log('API Base URL: /api/');
         console.log('Admin Panel: /admin.html');
