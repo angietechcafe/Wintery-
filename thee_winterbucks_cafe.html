@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Winterbucks Coffee - Annual Christmas Sale ☕🎄</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .snow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            color: white;
+            font-size: 1em;
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 10;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo h1 {
+            color: #00704a;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .logo span {
+            font-size: 2rem;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #00704a;
+        }
+
+        .user-info {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 5;
+        }
+
+        .banner {
+            background: linear-gradient(135deg, #c41e3a 0%, #165b33 100%);
+            color: white;
+            padding: 3rem;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .banner h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .banner p {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .sale-badge {
+            display: inline-block;
+            background: #ffd700;
+            color: #c41e3a;
+            padding: 0.5rem 2rem;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-top: 1rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-icon {
+            font-size: 4rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .product-card h3 {
+            color: #00704a;
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .product-card p {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .price {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 1.2rem;
+        }
+
+        .sale-price {
+            color: #c41e3a;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .discount {
+            background: #c41e3a;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        button {
+            background: #00704a;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        button:hover {
+            background: #165b33;
+            transform: scale(1.02);
+        }
+
+        .promo-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .promo-section h3 {
+            color: #00704a;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .promo-form {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        input[type="text"], input[type="email"] {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            min-width: 250px;
+        }
+
+        input[type="text"]:focus, input[type="email"]:focus {
+            outline: none;
+            border-color: #00704a;
+        }
+
+        .promo-form button {
+            flex: 0 0 auto;
+            width: auto;
+        }
+
+        .message {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        footer {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hidden-hint {
+            color: transparent;
+            font-size: 1px;
+            user-select: none;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .banner h2 {
+                font-size: 2rem;
+            }
+
+            .products {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="snow" id="snow"></div>
+
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <span>☕</span>
+                <h1>Winterbucks</h1>
+            </div>
+            <nav>
+                <a href="#menu">Menu</a>
+                <a href="#rewards">Rewards</a>
+                <a href="#stores">Stores</a>
+                <a href="#about">About</a>
+            </nav>
+            <div class="user-info">
+                <span id="username">Guest</span>
+                <a href="#" onclick="showLogin(); return false;">Login</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="banner">
+            <h2>🎄 Annual Christmas Sale 🎅</h2>
+            <p>Warm up your winter with our special holiday beverages!</p>
+            <p>Limited time offer - December 1-31</p>
+            <div class="sale-badge">Up to 50% OFF</div>
+        </div>
+
+        <div class="products" id="products">
+            <div class="product-card">
+                <div class="product-icon">☕</div>
+                <h3>Peppermint Mocha</h3>
+                <p>Rich espresso with steamed milk, sweet mocha sauce, and peppermint syrup. Topped with whipped cream and chocolate curls.</p>
+                <div class="price">
+                    <span class="original-price">$6.95</span>
+                    <span class="sale-price">$4.95</span>
+                    <span class="discount">29% OFF</span>
+                </div>
+                <button onclick="addToCart('Peppermint Mocha', 4.95)">Add to Cart</button>
+            </div>
+
+            <div class="product-card">
+                <div class="product-icon">🎄</div>
+                <h3>Gingerbread Latte</h3>
+                <p>Smooth espresso blended with steamed milk and gingerbread syrup. Topped with whipped cream and a sprinkle of cinnamon.</p>
+                <div class="price">
+                    <span class="original-price">$7.45</span>
+                    <span class="sale-price">$4.95</span>
+                    <span class="discount">34% OFF</span>
+                </div>
+                <button onclick="addToCart('Gingerbread Latte', 4.95)">Add to Cart</button>
+            </div>
+
+            <div class="product-card">
+                <div class="product-icon">❄️</div>
+                <h3>Eggnog Frappuccino</h3>
+                <p>Blended ice beverage with eggnog, coffee, and ice. Topped with whipped cream and a dash of nutmeg.</p>
+                <div class="price">
+                    <span class="original-price">$8.95</span>
+                    <span class="sale-price">$5.95</span>
+                    <span class="discount">34% OFF</span>
+                </div>
+                <button onclick="addToCart('Eggnog Frappuccino', 5.95)">Add to Cart</button>
+            </div>
+
+            <div class="product-card">
+                <div class="product-icon">🍪</div>
+                <h3>Hot Cocoa Deluxe</h3>
+                <p>Classic hot chocolate made with premium cocoa and steamed milk. Topped with whipped cream and mini marshmallows.</p>
+                <div class="price">
+                    <span class="original-price">$5.95</span>
+                    <span class="sale-price">$2.95</span>
+                    <span class="discount">50% OFF</span>
+                </div>
+                <button onclick="addToCart('Hot Cocoa Deluxe', 2.95)">Add to Cart</button>
+            </div>
+
+            <div class="product-card">
+                <div class="product-icon">🎁</div>
+                <h3>Caramel Brulée Latte</h3>
+                <p>Espresso meets steamed milk and rich caramel brulée sauce. Finished with whipped cream and caramel brulée topping.</p>
+                <div class="price">
+                    <span class="original-price">$7.95</span>
+                    <span class="sale-price">$5.45</span>
+                    <span class="discount">31% OFF</span>
+                </div>
+                <button onclick="addToCart('Caramel Brulée Latte', 5.45)">Add to Cart</button>
+            </div>
+
+            <div class="product-card">
+                <div class="product-icon">⭐</div>
+                <h3>Chestnut Praline Latte</h3>
+                <p>Espresso and steamed milk with caramelized chestnut flavors. Topped with whipped cream and spiced praline crumbs.</p>
+                <div class="price">
+                    <span class="original-price">$7.95</span>
+                    <span class="sale-price">$5.45</span>
+                    <span class="discount">31% OFF</span>
+                </div>
+                <button onclick="addToCart('Chestnut Praline Latte', 5.45)">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="promo-section">
+            <h3>🎅 Enter Promo Code for Extra Savings!</h3>
+            <p>Have a special promo code? Enter it below to unlock exclusive discounts!</p>
+            <form class="promo-form" onsubmit="validatePromo(event)">
+                <input type="text" id="promoCode" placeholder="Enter promo code (e.g., SANTA2024)" required>
+                <button type="submit">Apply Code</button>
+            </form>
+            <div id="promoMessage" class="message"></div>
+        </div>
+
+        <div class="promo-section">
+            <h3>📧 Subscribe for Exclusive Offers!</h3>
+            <p>Join our mailing list and get a free beverage on your birthday!</p>
+            <form class="promo-form" onsubmit="subscribe(event)">
+                <input type="text" id="subscribeName" placeholder="Your name" required>
+                <input type="email" id="subscribeEmail" placeholder="Your email" required>
+                <button type="submit">Subscribe</button>
+            </form>
+            <div id="subscribeMessage" class="message"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Winterbucks Coffee Company. All rights reserved.</p>
+        <p>🎄 Happy Holidays from our family to yours! ☕</p>
+        <!-- Development API endpoint: /api/admin?key=XMAS2024ADMIN -->
+        <span class="hidden-hint">atcctf_snowflakeshidesecretsinwinter</span>
+    </footer>
+
+    <script>
+        // Snowflake animation
+        function createSnowflakes() {
+            const snow = document.getElementById('snow');
+            for (let i = 0; i < 50; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                snowflake.innerHTML = '❄';
+                snowflake.style.left = Math.random() * 100 + '%';
+                snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
+                snowflake.style.opacity = Math.random();
+                snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
+                snowflake.style.animationDelay = Math.random() * 5 + 's';
+                snow.appendChild(snowflake);
+            }
+        }
+        createSnowflakes();
+
+        // Cart functionality
+        let cart = [];
+        
+        function addToCart(item, price) {
+            cart.push({item, price});
+            
+            // Vulnerable: Sending sensitive data in GET request
+            fetch(`/api/cart?item=${encodeURIComponent(item)}&price=${price}&userId=${getUserId()}&session=${getSessionToken()}`)
+                .then(response => response.json())
+                .catch(error => console.log('Cart service unavailable'));
+            
+            alert(`Added ${item} to cart! Total items: ${cart.length}`);
+        }
+
+        // Vulnerable: Weak session token generation
+        function getSessionToken() {
+            let token = localStorage.getItem('sessionToken');
+            if (!token) {
+                // Predictable session token (timestamp-based)
+                token = 'WB' + Date.now();
+                localStorage.setItem('sessionToken', token);
+            }
+            return token;
+        }
+
+        // Vulnerable: Sequential user IDs
+        function getUserId() {
+            let userId = localStorage.getItem('userId');
+            if (!userId) {
+                userId = Math.floor(Math.random() * 1000) + 1000; // IDs between 1000-2000
+                localStorage.setItem('userId', userId);
+            }
+            return userId;
+        }
+
+        // Vulnerable: Client-side promo validation with hints in response
+        function validatePromo(event) {
+            event.preventDefault();
+            const code = document.getElementById('promoCode').value;
+            const message = document.getElementById('promoMessage');
+            
+            // Simulate API call
+            fetch('/api/promo', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-User-ID': getUserId(),
+                    'X-Session-Token': getSessionToken()
+                },
+                body: JSON.stringify({
+                    code: code,
+                    userId: getUserId()
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (code.toUpperCase() === 'SANTA2024') {
+                    message.className = 'message success';
+                    message.innerHTML = '🎉 Success! 20% additional discount applied!<br><small>atcctf_santassleighridesatmidnight</small>';
+                } else if (code.toUpperCase() === 'ADMIN2024') {
+                    message.className = 'message success';
+                    message.innerHTML = '🔑 Admin access granted!<br><small>atcctf_frostyadminpaneldiscovered</small>';
+                } else if (code.toUpperCase().startsWith('XMAS')) {
+                    message.className = 'message error';
+                    message.innerHTML = '❌ Invalid code. Hint: Try codes starting with SANTA or ADMIN';
+                } else {
+                    message.className = 'message error';
+                    message.innerHTML = '❌ Invalid promo code. Try checking the source!';
+                }
+            })
+            .catch(error => {
+                message.className = 'message error';
+                message.innerHTML = '❌ Service temporarily unavailable';
+            });
+        }
+
+        // Vulnerable: No rate limiting, XSS vulnerability
+        function subscribe(event) {
+            event.preventDefault();
+            const name = document.getElementById('subscribeName').value;
+            const email = document.getElementById('subscribeEmail').value;
+            const message = document.getElementById('subscribeMessage');
+            
+            // Vulnerable: Reflecting user input without sanitization
+            message.className = 'message success';
+            message.innerHTML = `✅ Thanks ${name}! Check your email at ${email} for confirmation.<br><small>atcctf_iciclesmeltinwarmrequests</small>`;
+            
+            // Send to fake API
+            fetch('/api/subscribe', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    timestamp: Date.now(),
+                    userAgent: navigator.userAgent
+                })
+            }).catch(error => console.log('Subscription service unavailable'));
+        }
+
+        function showLogin() {
+            alert('Login functionality coming soon! 🎄\nHint: Check the network requests for interesting endpoints.');
+        }
+
+        // Vulnerable: Exposing sensitive information in console
+        console.log('Winterbucks Debug Mode Active');
+        console.log('API Base URL: /api/');
+        console.log('Admin Panel: /admin.html');
+        console.log('Session Token:', getSessionToken());
+        console.log('User ID:', getUserId());
+        console.log('%c atcctf_winterconsolelogsrevealall', 'color: green; font-size: 16px; font-weight: bold;');
+    </script>
+</body>
+</html>
