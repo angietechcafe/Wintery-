@@ -171,7 +171,7 @@
             const password = document.getElementById('password').value;
             const apiKey = document.getElementById('apiKey').value;
 
-            // Vulnerable: credentials checked client-side
+            
             if (username === 'admin' && password === 'Winterbucks2024!' && apiKey === 'XMAS2024ADMIN') {
                 alert('🎉 Login Successful!\n\nBONUS FLAG: atcctf_blizzardhidesadminsecrets\nFINAL FLAG: atcctf_frozencredentialsneverthaw\n\nCongratulations on completing the Winterbucks CTF Challenge!');
                 console.log('%c BONUS FLAG: atcctf_blizzardhidesadminsecrets', 'color: cyan; font-size: 18px; font-weight: bold;');
@@ -182,7 +182,7 @@
             }
         }
 
-        // Vulnerable: Hardcoded credentials in JavaScript
+        
         const CONFIG = {
             adminUsername: 'admin',
             adminPassword: 'Winterbucks2024!',
