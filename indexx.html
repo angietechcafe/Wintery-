@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Winterbucks Cafe - Order Status ☕</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            color: white;
+            font-size: 1em;
+            opacity: 0.8;
+            animation: fall linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+
+        .order-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #764ba2;
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-style: italic;
+        }
+
+        .order-lookup {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #764ba2;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        .order-details {
+            display: none;
+            background: #e8f5e9;
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid #4caf50;
+        }
+
+        .order-details.show {
+            display: block;
+        }
+
+        .order-details h3 {
+            color: #2e7d32;
+            margin-bottom: 15px;
+        }
+
+        .order-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .order-meta {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+        }
+
+        .error {
+            display: none;
+            background: #ffebee;
+            padding: 15px;
+            border-radius: 8px;
+            color: #c62828;
+            margin-top: 15px;
+            border-left: 5px solid #c62828;
+        }
+
+        .error.show {
+            display: block;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            color: #1565c0;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="order-container">
+        <div class="header">
+            <h1>❄️ Winterbucks Order Tracker</h1>
+            <p>Track your cozy beverage order</p>
+        </div>
+
+        <div class="order-lookup">
+            <div class="form-group">
+                <label for="orderId">Order ID</label>
+                <input type="text" id="orderId" placeholder="Enter your order ID (e.g., 1001)">
+            </div>
+            <button onclick="lookupOrder()">Track Order</button>
+            
+            <div class="info-box">
+                📋 Your order ID was sent to your email when you placed your order.
+            </div>
+        </div>
+
+        <div id="orderResult"></div>
+    </div>
+
+    <script>
+        // Simulated order database
+        const orders = {
+            1001: {
+                id: 1001,
+                customer: "Sarah",
+                items: ["Hot Chocolate", "Winter Spice Muffin"],
+                status: "Ready for Pickup",
+                timestamp: "2024-01-25 10:30 AM",
+                total: "$8.00"
+            },
+            1002: {
+                id: 1002,
+                customer: "Mike",
+                items: ["Peppermint Tea"],
+                status: "In Progress",
+                timestamp: "2024-01-25 10:45 AM",
+                total: "$3.75"
+            },
+            1003: {
+                id: 1003,
+                customer: "Emma",
+                items: ["Snowcone Latte", "Hot Chocolate"],
+                status: "Ready for Pickup",
+                timestamp: "2024-01-25 11:00 AM",
+                total: "$9.75"
+            },
+            1337: {
+                id: 1337,
+                customer: "Admin",
+                items: ["Secret Winter Recipe ❄️"],
+                status: "CONFIDENTIAL",
+                timestamp: "2024-01-25 09:00 AM",
+                total: "N/A",
+                note: "flag{froz3n1D0R}"
+            }
+        };
+
+        function lookupOrder() {
+            const orderId = document.getElementById('orderId').value;
+            const resultDiv = document.getElementById('orderResult');
+            
+            resultDiv.innerHTML = '';
+
+            if (!orderId) {
+                resultDiv.innerHTML = '<div class="error show">Please enter an order ID</div>';
+                return;
+            }
+
+            const order = orders[orderId];
+
+            if (order) {
+                let html = '<div class="order-details show">';
+                html += '<h3>✅ Order Found</h3>';
+                html += `<div class="order-item"><strong>Order #${order.id}</strong><br>`;
+                html += `Customer: ${order.customer}<br>`;
+                html += `Items: ${order.items.join(', ')}<br>`;
+                html += `Status: <strong>${order.status}</strong><br>`;
+                html += `Total: ${order.total}</div>`;
+                
+                if (order.note) {
+                    html += `<div class="order-item" style="background: #fff3cd; border-left: 4px solid #ffc107;">`;
+                    html += `<strong>Special Note:</strong> ${order.note}</div>`;
+                }
+                
+                html += `<div class="order-meta">Ordered at: ${order.timestamp}</div>`;
+                html += '</div>';
+                
+                resultDiv.innerHTML = html;
+            } else {
+                resultDiv.innerHTML = '<div class="error show">Order not found. Please check your order ID.</div>';
+            }
+        }
+
+        // Create falling snowflakes
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+            snowflake.innerHTML = '❄';
+            snowflake.style.left = Math.random() * 100 + 'vw';
+            snowflake.style.animationDuration = Math.random() * 3 + 5 + 's';
+            snowflake.style.opacity = Math.random();
+            snowflake.style.fontSize = Math.random() * 1 + 0.5 + 'em';
+            document.body.appendChild(snowflake);
+
+            setTimeout(() => {
+                snowflake.remove();
+            }, 8000);
+        }
+
+        setInterval(createSnowflake, 300);
+
+        // Allow Enter key to submit
+        document.getElementById('orderId').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                lookupOrder();
+            }
+        });
+    </script>
+</body>
+</html>
