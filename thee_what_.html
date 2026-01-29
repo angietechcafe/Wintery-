@@ -163,38 +163,8 @@
         </div>
     </div>
 
-    <script>
-        function handleLogin(event) {
-            event.preventDefault();
-            
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const apiKey = document.getElementById('apiKey').value;
-
-            
-            if (username === 'admin' && password === 'Winterbucks2024!' && apiKey === 'XMAS2024ADMIN') {
-                alert('🎉 Login Successful!\n\nBONUS FLAG: atcctf_blizzardhidesadminsecrets\nFINAL FLAG: atcctf_frozencredentialsneverthaw\n\nCongratulations on completing the Winterbucks CTF Challenge!');
-                console.log('%c BONUS FLAG: atcctf_blizzardhidesadminsecrets', 'color: cyan; font-size: 18px; font-weight: bold;');
-                console.log('%c FINAL FLAG: atcctf_frozencredentialsneverthaw', 'color: gold; font-size: 20px; font-weight: bold;');
-                console.log('Credentials found: admin / Winterbucks2024! / XMAS2024ADMIN');
-            } else {
-                alert('❌ Invalid credentials\n\nHint: Check the HTML source code and JavaScript for hardcoded credentials!');
-            }
-        }
-
-        
-        const CONFIG = {
-            adminUsername: 'admin',
-            adminPassword: 'Winterbucks2024!',
-            apiKey: 'XMAS2024ADMIN',
-            apiEndpoint: '/api/admin',
-            debug: true
-        };
-
-        if (CONFIG.debug) {
-            console.log('Admin Panel Debug Mode');
-            console.log('Looking for credentials? They might be in this file... 👀');
-        }
-    </script>
+    <script src="winterbucks_auth.js"></script>
+    <script src="winterbucks_creds.js"></script>
+    
 </body>
 </html>
